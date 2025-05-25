@@ -6,6 +6,6 @@ import (
 	"github.com/gocql/gocql"
 )
 
-func IsErrorNotFound(err error) bool {
+func IsErrNotFound(err error) bool {
 	return errors.Is(err, gocql.ErrNotFound)
 }
