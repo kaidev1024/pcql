@@ -2,8 +2,6 @@ package pcql
 
 import (
 	"fmt"
-
-	"github.com/scylladb/gocqlx/qb"
 )
 
 func Insert(stmt string, names []string, row any) error {
@@ -23,7 +21,7 @@ func Delete(stmt string, names []string, row any) error {
 	return sessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
 
-func Select(stmt string, names []string, input qb.M, rows any) error {
+func Select(stmt string, names []string, input M, rows any) error {
 	err := sessionx.Query(stmt, names).BindMap(input).SelectRelease(rows)
 	if err != nil {
 		return err
