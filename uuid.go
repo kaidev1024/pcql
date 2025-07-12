@@ -1,6 +1,8 @@
 package pcql
 
 import (
+	"bytes"
+
 	"github.com/gocql/gocql"
 )
 
@@ -12,4 +14,8 @@ func IsZeroUUID(u gocql.UUID) bool {
 
 func TimeUUID() UUID {
 	return gocql.TimeUUID()
+}
+
+func IsUUIDGreater(uuid1, uuid2 gocql.UUID) bool {
+	return bytes.Compare(uuid1[:], uuid2[:]) > 0
 }
