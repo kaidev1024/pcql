@@ -2,7 +2,9 @@ package pcql
 
 import (
 	"log"
+	"time"
 
+	astra "github.com/datastax/gocql-astra"
 	"github.com/gocql/gocql"
 	"github.com/scylladb/gocqlx/v3"
 )
@@ -30,6 +32,24 @@ func Setup(address, keyspace string) {
 		log.Fatal(err)
 	}
 	// defer keyspaceWorenaSession.Close()
+}
+
+func SetupAstra(id, token, apiURL, keyspace string) {
+	cluster, err := astra.NewClusterFromURL(apiURL, id, token, 10*time.Second)
+	if err != nil {
+		log.Fatalf("unable to create astra cluster config: %v", err)
+	}
+
+	cluster.Keyspace = keyspace
+
+	session, err = cluster.CreateSession()
+	if err != nil {
+		log.Fatalf("could not connect to astra db: %v", err)
+	}
+	sessionx, err = gocqlx.WrapSession(session, err)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func Execute(stmt string, names ...interface{}) error {
