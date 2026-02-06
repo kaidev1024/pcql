@@ -41,6 +41,8 @@ func SetupAstra(id, token, keyspace string) {
 	}
 
 	cluster.Keyspace = keyspace
+	cluster.Timeout = 5 * time.Second
+	cluster.ConnectTimeout = 5 * time.Second
 
 	session, err = cluster.CreateSession()
 	if err != nil {
