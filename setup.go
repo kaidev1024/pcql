@@ -31,7 +31,7 @@ func Setup(address, keyspace string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// defer keyspaceWorenaSession.Close()
+	defer session.Close()
 }
 
 func SetupCassandra(id, token, keyspace string) {
