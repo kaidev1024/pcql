@@ -37,7 +37,7 @@ func Setup(address, keyspace string) {
 func SetupCassandra(id, token, keyspace string) {
 	cluster, err := astra.NewClusterFromURL("https://api.astra.datastax.com", id, token, 10*time.Second)
 	if err != nil {
-		log.Fatalf("unable to create astra cluster config: %v", err)
+		log.Fatalf("unable to create cassandra(astra) cluster config: %v", err)
 	}
 
 	cluster.Keyspace = keyspace
