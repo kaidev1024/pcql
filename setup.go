@@ -1,6 +1,7 @@
 package pcql
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -34,10 +35,10 @@ func Setup(address, keyspace string) {
 	defer session.Close()
 }
 
-func SetupCassandra(id, token, keyspace string) {
+func SetupCassandra(id, token, keyspace string) error {
 	cluster, err := astra.NewClusterFromURL("https://api.astra.datastax.com", id, token, 10*time.Second)
 	if err != nil {
-		log.Fatalf("unable to create cassandra(astra) cluster config: %v", err)
+		return fmt.Errorf("unable to create cassandra(astra) cluster config: %v", err)
 	}
 
 	cluster.Keyspace = keyspace
@@ -46,12 +47,13 @@ func SetupCassandra(id, token, keyspace string) {
 
 	session, err = cluster.CreateSession()
 	if err != nil {
-		log.Fatalf("could not connect to astra db: %v", err)
+		return fmt.Errorf("could not connect to astra db: %v", err)
 	}
 	sessionx, err = gocqlx.WrapSession(session, err)
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("could not wrap session: %v", err)
 	}
+	return nil
 }
 
 func Execute(stmt string, names ...interface{}) error {
