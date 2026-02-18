@@ -2,7 +2,6 @@ package pcql
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	astra "github.com/datastax/gocql-astra"
@@ -13,27 +12,27 @@ import (
 var sessionx gocqlx.Session
 var session *gocql.Session
 
-func Setup(address, keyspace string) {
-	cluster := gocql.NewCluster(address)
-	cluster.Keyspace = keyspace
-	cluster.Consistency = gocql.LocalOne
-	cluster.ProtoVersion = 4
-	// for authentication:
-	//   cluster.Authenticator = gocql.PasswordAuthenticator{
-	// 		Username: "user",
-	// 		Password: "password"
-	//  }
-	var err error
-	session, err = cluster.CreateSession()
-	if err != nil {
-		log.Fatal(err)
-	}
-	sessionx, err = gocqlx.WrapSession(session, err)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer session.Close()
-}
+// func Setup(address, keyspace string) {
+// 	cluster := gocql.NewCluster(address)
+// 	cluster.Keyspace = keyspace
+// 	cluster.Consistency = gocql.LocalOne
+// 	cluster.ProtoVersion = 4
+// 	// for authentication:
+// 	//   cluster.Authenticator = gocql.PasswordAuthenticator{
+// 	// 		Username: "user",
+// 	// 		Password: "password"
+// 	//  }
+// 	var err error
+// 	session, err = cluster.CreateSession()
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	sessionx, err = gocqlx.WrapSession(session, err)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	defer session.Close()
+// }
 
 func SetupCassandra(id, token, keyspace string) error {
 	cluster, err := astra.NewClusterFromURL("https://api.astra.datastax.com", id, token, 10*time.Second)
