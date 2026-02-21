@@ -45,3 +45,12 @@ func InsertPattri(stmt string, names []string, row any) error {
 func GetPattri(stmt string, names []string, input, ret any) error {
 	return pattriSessionx.Query(stmt, names).BindStruct(input).GetRelease(ret)
 }
+
+func UpdatePattri(stmt string, names []string, row any) error {
+	err := pattriSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
+	if err != nil {
+		println(err.Error())
+		return err
+	}
+	return nil
+}

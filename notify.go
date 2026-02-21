@@ -70,3 +70,12 @@ func SelectPaginatedNotify(stmt string, names []string, input M, rows any, pageS
 		HasMore:   len(nextPageState) > 0,
 	}, nil
 }
+
+func UpdateNotify(stmt string, names []string, row any) error {
+	err := notifySessionx.Query(stmt, names).BindStruct(row).ExecRelease()
+	if err != nil {
+		println(err.Error())
+		return err
+	}
+	return nil
+}
