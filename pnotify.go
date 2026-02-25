@@ -12,7 +12,7 @@ import (
 var notifySessionx gocqlx.Session
 var notifySession *gocql.Session
 
-func SetupCassandraNotify(id, token, keyspace string) error {
+func SetupCassandraPnotify(id, token, keyspace string) error {
 	cluster, err := astra.NewClusterFromURL("https://api.astra.datastax.com", id, token, 10*time.Second)
 	if err != nil {
 		return fmt.Errorf("unable to create cassandra(astra) cluster: %v", err)
@@ -33,7 +33,7 @@ func SetupCassandraNotify(id, token, keyspace string) error {
 	return nil
 }
 
-func InsertNotify(stmt string, names []string, row any) error {
+func InsertPnotify(stmt string, names []string, row any) error {
 	err := notifySessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 	if err != nil {
 		println(err.Error())
@@ -42,11 +42,11 @@ func InsertNotify(stmt string, names []string, row any) error {
 	return nil
 }
 
-func GetNotify(stmt string, names []string, input, ret any) error {
+func GetPnotify(stmt string, names []string, input, ret any) error {
 	return notifySessionx.Query(stmt, names).BindStruct(input).GetRelease(ret)
 }
 
-func SelectPaginatedNotify(stmt string, names []string, input M, rows any, pageState []byte) (*PaginationResult, error) {
+func SelectPaginatedPnotify(stmt string, names []string, input M, rows any, pageState []byte) (*PaginationResult, error) {
 	pageSize := 20
 	query := notifySessionx.Query(stmt, names).BindMap(input).PageSize(pageSize)
 
@@ -71,7 +71,7 @@ func SelectPaginatedNotify(stmt string, names []string, input M, rows any, pageS
 	}, nil
 }
 
-func UpdateNotify(stmt string, names []string, row any) error {
+func UpdatePnotify(stmt string, names []string, row any) error {
 	err := notifySessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 	if err != nil {
 		println(err.Error())

@@ -12,7 +12,7 @@ import (
 var osmSessionx gocqlx.Session
 var osmSession *gocql.Session
 
-func SetupCassandraOsm(id, token, keyspace string) error {
+func SetupCassandraPosm(id, token, keyspace string) error {
 	cluster, err := astra.NewClusterFromURL("https://api.astra.datastax.com", id, token, 10*time.Second)
 	if err != nil {
 		return fmt.Errorf("unable to create cassandra(astra) cluster: %v", err)
@@ -33,7 +33,7 @@ func SetupCassandraOsm(id, token, keyspace string) error {
 	return nil
 }
 
-func InsertOsm(stmt string, names []string, row any) error {
+func InsertPosm(stmt string, names []string, row any) error {
 	err := osmSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 	if err != nil {
 		println(err.Error())
@@ -42,11 +42,11 @@ func InsertOsm(stmt string, names []string, row any) error {
 	return nil
 }
 
-func GetOsm(stmt string, names []string, input, ret any) error {
+func GetPosm(stmt string, names []string, input, ret any) error {
 	return osmSessionx.Query(stmt, names).BindStruct(input).GetRelease(ret)
 }
 
-func SelectOsm(stmt string, names []string, input M, rows any) error {
+func SelectPosm(stmt string, names []string, input M, rows any) error {
 	err := osmSessionx.Query(stmt, names).BindMap(input).SelectRelease(rows)
 	if err != nil {
 		return err
@@ -54,7 +54,7 @@ func SelectOsm(stmt string, names []string, input M, rows any) error {
 	return nil
 }
 
-func UpdateOsm(stmt string, names []string, row any) error {
+func UpdatePosm(stmt string, names []string, row any) error {
 	err := osmSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 	if err != nil {
 		println(err.Error())
