@@ -34,12 +34,7 @@ func SetupCassandraPosm(id, token, keyspace string) error {
 }
 
 func InsertPosm(stmt string, names []string, row any) error {
-	err := posmSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
-	if err != nil {
-		println(err.Error())
-		return err
-	}
-	return nil
+	return posmSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
 
 func GetPosm(stmt string, names []string, input, ret any) error {
@@ -47,18 +42,9 @@ func GetPosm(stmt string, names []string, input, ret any) error {
 }
 
 func SelectPosm(stmt string, names []string, input M, rows any) error {
-	err := posmSessionx.Query(stmt, names).BindMap(input).SelectRelease(rows)
-	if err != nil {
-		return err
-	}
-	return nil
+	return posmSessionx.Query(stmt, names).BindMap(input).SelectRelease(rows)
 }
 
 func UpdatePosm(stmt string, names []string, row any) error {
-	err := posmSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
-	if err != nil {
-		println(err.Error())
-		return err
-	}
-	return nil
+	return posmSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
