@@ -10,12 +10,7 @@ type PaginationResult struct {
 }
 
 func Insert(stmt string, names []string, row any) error {
-	err := sessionx.Query(stmt, names).BindStruct(row).ExecRelease()
-	if err != nil {
-		println(err.Error())
-		return err
-	}
-	return nil
+	return sessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
 
 func Get(stmt string, names []string, input, ret any) error {
@@ -27,11 +22,7 @@ func Delete(stmt string, names []string, row any) error {
 }
 
 func Select(stmt string, names []string, input M, rows any) error {
-	err := sessionx.Query(stmt, names).BindMap(input).SelectRelease(rows)
-	if err != nil {
-		return err
-	}
-	return nil
+	return sessionx.Query(stmt, names).BindMap(input).SelectRelease(rows)
 }
 
 // SelectPaginated performs a paginated select query and returns the results along with pagination information.
@@ -62,12 +53,7 @@ func SelectPaginated(stmt string, names []string, input M, rows any, pageState [
 }
 
 func Update(stmt string, names []string, row any) error {
-	err := sessionx.Query(stmt, names).BindStruct(row).ExecRelease()
-	if err != nil {
-		println(err.Error())
-		return err
-	}
-	return nil
+	return sessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
 
 func Count(stmt string) (int, error) {

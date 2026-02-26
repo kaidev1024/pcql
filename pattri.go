@@ -34,12 +34,7 @@ func SetupCassandraPattri(id, token, keyspace string) error {
 }
 
 func InsertPattri(stmt string, names []string, row any) error {
-	err := pattriSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
-	if err != nil {
-		println(err.Error())
-		return err
-	}
-	return nil
+	return pattriSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
 
 func GetPattri(stmt string, names []string, input, ret any) error {
@@ -47,10 +42,5 @@ func GetPattri(stmt string, names []string, input, ret any) error {
 }
 
 func UpdatePattri(stmt string, names []string, row any) error {
-	err := pattriSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
-	if err != nil {
-		println(err.Error())
-		return err
-	}
-	return nil
+	return pattriSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }

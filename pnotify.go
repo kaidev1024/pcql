@@ -34,12 +34,7 @@ func SetupCassandraPnotify(id, token, keyspace string) error {
 }
 
 func InsertPnotify(stmt string, names []string, row any) error {
-	err := notifySessionx.Query(stmt, names).BindStruct(row).ExecRelease()
-	if err != nil {
-		println(err.Error())
-		return err
-	}
-	return nil
+	return notifySessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
 
 func GetPnotify(stmt string, names []string, input, ret any) error {
@@ -72,10 +67,5 @@ func SelectPaginatedPnotify(stmt string, names []string, input M, rows any, page
 }
 
 func UpdatePnotify(stmt string, names []string, row any) error {
-	err := notifySessionx.Query(stmt, names).BindStruct(row).ExecRelease()
-	if err != nil {
-		println(err.Error())
-		return err
-	}
-	return nil
+	return notifySessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
