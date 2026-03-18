@@ -33,6 +33,10 @@ func SetupCassandraPattri(id, token, keyspace string) error {
 	return nil
 }
 
+func SelectPattri(stmt string, names []string, input M, rows any) error {
+	return pattriSessionx.Query(stmt, names).BindMap(input).SelectRelease(rows)
+}
+
 func InsertPattri(stmt string, names []string, row any) error {
 	return pattriSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
