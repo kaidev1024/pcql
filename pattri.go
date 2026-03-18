@@ -44,3 +44,11 @@ func GetPattri(stmt string, names []string, input, ret any) error {
 func UpdatePattri(stmt string, names []string, row any) error {
 	return pattriSessionx.Query(stmt, names).BindStruct(row).ExecRelease()
 }
+
+func CreatePattriNewBatch() Batch {
+	return pattriSessionx.NewBatch(gocql.LoggedBatch)
+}
+
+func ExecutePattriBatch(batch Batch) error {
+	return pattriSessionx.ExecuteBatch(batch)
+}
